@@ -1,0 +1,113 @@
+@dc:title "My Project Description"
+@dc:description "The My Project ontologies."
+description <http://www.example.com/project/description#> as myproject-desc {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <http://www.example.com/method/vocabulary#> as method
+
+    instance ApplicationSource1 : method:ApplicationSource [
+        method:itemName "Active Directory"
+        method:itemDescription "Active Directory is a directory service developed by Microsoft for Windows domain networks."
+        method:hasEntitlement Entitlement1, Entitlement2, Entitlement3
+        method:hasAccount Account1, Account2
+    ]
+
+    instance ApplicationSource2 : method:ApplicationSource [
+        method:itemName "Dropbox"
+        method:itemDescription "Dropbox is a cloud storage service that allows users to store and sync files across devices."
+        method:hasEntitlement Entitlement4, Entitlement5
+        method:hasAccount Account3, Account4
+
+    ]
+
+    instance Entitlement1 : method:Entitlement [
+        method:itemName "Domain Admin"
+        method:itemDescription "Administrative privileges in an Active Directory domain."
+
+    ]
+
+    instance Entitlement2 : method:Entitlement [
+        method:itemName "Citrix General User"
+        method:itemDescription "Access to Citrix applications and resources."
+    ]
+
+    instance Entitlement3 : method:Entitlement [
+        method:itemName "Muse_Users"
+        method:itemDescription "Access to the Muse application."
+    ]
+
+    instance Entitlement4 : method:Entitlement [
+        method:itemName "Member_Only"
+        method:itemDescription "Limited access to content or features."
+    ]
+
+    instance Entitlement5 : method:Entitlement [
+        method:itemName "Team_Admin"
+        method:itemDescription "Administrative privileges."
+    ]
+
+    instance Account1 : method:Account [
+        method:itemName "sl0043"
+        method:nativeIdentity "NETWORK\sl0043"
+        method:isCorrelated true
+        method:correlatesTo Identity1
+        method:holdsEntitlement Entitlement1
+    ]
+
+    instance Account2 : method:Account [
+        method:itemName "bs0012"
+        method:nativeIdentity "NETWORK\bs0012"
+        method:isCorrelated false
+        method:holdsEntitlement Entitlement3
+    ]
+
+        instance Account3 : method:Account [
+        method:itemName "Ledbetter, Sheldon"
+        method:nativeIdentity "sl0043@network.org"
+        method:isCorrelated true
+        method:correlatesTo Identity1
+        method:holdsEntitlement Entitlement4, Entitlement5
+    ]
+
+    instance Account4 : method:Account [
+        method:itemName "Swiger, Bryan"
+        method:nativeIdentity "bs0012@network.org"
+        method:isCorrelated true
+        method:correlatesTo Identity2
+    ]
+
+    instance Role1 : method:Role [
+        method:itemName "Systems Administrator"
+        method:itemDescription "Responsible for managing and maintaining access for all applications."
+        method:containsEntitlement Entitlement1, Entitlement5
+    ]
+
+    instance Role2 : method:Role [
+        method:itemName "HR Analyst"
+        method:itemDescription "Basic HR functions and responsibilities."
+        method:containsAccessProfile AccessProfile2
+    ]
+
+    instance Identity1 : method:Identity [
+        method:itemName "Sheldon Ledbetter"
+        method:identityType "Human"
+    ]
+
+    instance Identity2 : method:Identity [
+        method:itemName "Bryan Swiger"
+        method:identityType "Human"
+    ]
+
+    instance AccessProfile1 : method:AccessProfile [
+        method:itemName "Citrix Access"
+        method:itemDescription "Access to Citrix applications and resources."
+        method:belongsToApplicationSource ApplicationSource1
+        method:bundles Entitlement2
+    ]
+
+    instance AccessProfile2 : method:AccessProfile [
+        method:itemName "Basic Dropbox Access"
+        method:itemDescription "Access to Dropbox cloud storage."
+        method:belongsToApplicationSource ApplicationSource2
+        method:bundles Entitlement4
+    ]
+}
