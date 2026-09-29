@@ -1,0 +1,27 @@
+vocabulary <http://www.example.com/method/application-source#> as application-source {
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.example.com/method/base#> as base
+    extends <http://www.example.com/method/entitlement#> as entitlement
+    extends <http://www.example.com/method/account#> as account
+
+    @dc:description "The class of application sources"
+    concept ApplicationSource < base:Component 
+
+
+    @dc:description "The relation from ApplicationSource to Entitlement"
+    relation hasEntitlement [
+        from ApplicationSource
+        to entitlement:Entitlement
+        reverse isEntitlementOf
+        inverse functional
+    ]
+
+
+    @dc:description "The relation from ApplicationSource to Account"
+    relation hasAccount [
+        from ApplicationSource
+        to account:Account
+        reverse isAccountOf
+        inverse functional
+    ]
+}

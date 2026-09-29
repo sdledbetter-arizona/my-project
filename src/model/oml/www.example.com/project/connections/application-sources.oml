@@ -1,0 +1,24 @@
+@dc:title "Application Sources"
+@dc:description "Description of Application Sources for my project."
+description <http://www.example.com/project/connections/application-sources#> as application-sources {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <http://www.example.com/method/base#> as base
+    uses <http://www.example.com/method/application-source#> as application
+    extends <http://www.example.com/project/identity-management/accounts#> as accounts
+    extends <http://www.example.com/project/access-models/entitlements#> as entitlements
+
+    instance ApplicationSource1 : application:ApplicationSource [
+        base:itemName "Active Directory"
+        base:itemDescription "Active Directory is a directory service developed by Microsoft for Windows domain networks."
+        application:hasEntitlement entitlements:Entitlement1, entitlements:Entitlement2, entitlements:Entitlement3
+        application:hasAccount accounts:Account1, accounts:Account2
+    ]
+
+    instance ApplicationSource2 : application:ApplicationSource [
+        base:itemName "Dropbox"
+        base:itemDescription "Dropbox is a cloud storage service that allows users to store and sync files across devices."
+        application:hasEntitlement entitlements:Entitlement4, entitlements:Entitlement5
+        application:hasAccount accounts:Account3, accounts:Account4
+
+    ]
+}

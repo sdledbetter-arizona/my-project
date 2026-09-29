@@ -1,0 +1,11 @@
+vocabulary <http://www.example.com/method/entitlement#> as entitlement {
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.example.com/method/base#> as base
+    extends <http://www.example.com/method/application-source#> as application-source
+
+    @dc:description "The class of entitlements"
+    concept Entitlement < base:Component [
+        restricts application-source:isEntitlementOf to exactly 1
+    ]
+
+}

@@ -1,0 +1,28 @@
+vocabulary <http://www.example.com/method/access-profile#> as access-profile {
+    extends <http://www.example.com/method/base#> as base
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.example.com/method/entitlement#> as entitlement
+    extends <http://www.example.com/method/application-source#> as application-source
+
+    @dc:description "The class of access profiles"
+    concept AccessProfile < base:Component [
+        restricts belongsToApplicationSource to max 1
+    ]
+
+
+    @dc:description "The relation from AccessProfile to Entitlement"
+    relation bundles [
+        from AccessProfile
+        to entitlement:Entitlement
+        reverse isBundledBy
+    ]
+
+
+    @dc:description "The relation from AccessProfile to ApplicationSource"
+    relation belongsToApplicationSource [
+        from AccessProfile
+        to application-source:ApplicationSource
+        reverse sourceForAccessProfile
+        functional
+    ]
+}

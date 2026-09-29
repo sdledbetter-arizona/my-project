@@ -1,0 +1,33 @@
+@dc:title "Entitlements"
+@dc:description "Description of Entitlements for my project."
+description <http://www.example.com/project/access-models/entitlements#> as entitlements {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <http://www.example.com/method/base#> as base
+    uses <http://www.example.com/method/entitlement#> as entitlement
+
+
+    instance Entitlement1 : entitlement:Entitlement [
+        base:itemName "Domain Admin"
+        base:itemDescription "Administrative privileges in an Active Directory domain."
+    ]
+
+    instance Entitlement2 : entitlement:Entitlement [
+        base:itemName "Citrix General User"
+        base:itemDescription "Access to Citrix applications and resources."
+    ]
+
+    instance Entitlement3 : entitlement:Entitlement [
+        base:itemName "Muse_Users"
+        base:itemDescription "Access to the Muse application."
+    ]
+
+    instance Entitlement4 : entitlement:Entitlement [
+        base:itemName "Member_Only"
+        base:itemDescription "Limited access to content or features."
+    ]
+
+    instance Entitlement5 : entitlement:Entitlement [
+        base:itemName "Team_Admin"
+        base:itemDescription "Administrative privileges."
+    ]
+}

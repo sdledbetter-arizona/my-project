@@ -1,0 +1,24 @@
+vocabulary <http://www.example.com/method/role#> as role {
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.example.com/method/base#> as base
+    extends <http://www.example.com/method/access-profile#> as access-profile
+    extends <http://www.example.com/method/entitlement#> as entitlement
+
+    @dc:description "The class of roles"
+    concept Role < base:Component
+
+
+    @dc:description "The relation from Role to Entitlement"
+    relation containsEntitlement [
+        from Role
+        to entitlement:Entitlement
+        reverse isEntitlementContainedIn
+    ]
+
+    @dc:description "The relation from Role to AccessProfile"
+    relation containsAccessProfile [
+        from Role
+        to access-profile:AccessProfile
+        reverse isAccessProfileContainedIn
+    ]
+}

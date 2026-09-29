@@ -1,6 +1,10 @@
 @dc:description "A vocabulary bundle for the method ontologies"
 vocabulary bundle <http://www.example.com/method/bundle#> as v-bundle {
-    
     includes <http://purl.org/dc/elements/1.1/> as dc
-    includes <http://www.example.com/method/vocabulary#>
+    includes <http://www.example.com/method/access-profile#>
+    includes <http://www.example.com/method/entitlement#>
+    includes <http://www.example.com/method/role#>
+    includes <http://www.example.com/method/account#>
+    includes <http://www.example.com/method/identity#>
+    includes <http://www.example.com/method/application-source#>
 }

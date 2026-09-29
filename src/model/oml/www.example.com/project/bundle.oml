@@ -1,0 +1,10 @@
+@dc:description "A description bundle for the model ontologies."
+description bundle <http://www.example.com/project/bundle#> as d-bundle {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    includes <http://www.example.com/project/access-models/access-profiles#>
+    includes <http://www.example.com/project/access-models/entitlements#>
+    includes <http://www.example.com/project/access-models/roles#>
+    includes <http://www.example.com/project/connections/application-sources#>
+    includes <http://www.example.com/project/identity-management/accounts#>
+    includes <http://www.example.com/project/identity-management/identities#>
+}

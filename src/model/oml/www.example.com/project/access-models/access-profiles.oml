@@ -1,0 +1,25 @@
+@dc:title "Access Profiles"
+@dc:description "Description of Access Profiles for my project."
+description <http://www.example.com/project/access-models/access-profiles#> as access-profiles {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <http://www.example.com/method/base#> as base
+    extends <http://www.example.com/project/access-models/entitlements#> as entitlements
+    extends <http://www.example.com/project/connections/application-sources#> as applications
+    uses <http://www.example.com/method/access-profile#> as access-profile
+
+
+    instance AccessProfile1 : access-profile:AccessProfile [
+        base:itemName "Citrix Access"
+        base:itemDescription "Access to Citrix applications and resources."
+        access-profile:belongsToApplicationSource applications:ApplicationSource1
+        access-profile:bundles entitlements:Entitlement2
+    ]
+
+    instance AccessProfile2 : access-profile:AccessProfile [
+        base:itemName "Basic Dropbox Access"
+        base:itemDescription "Access to Dropbox cloud storage."
+        access-profile:belongsToApplicationSource applications:ApplicationSource2
+        access-profile:bundles entitlements:Entitlement4
+    ]
+
+}

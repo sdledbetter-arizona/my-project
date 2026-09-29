@@ -1,0 +1,41 @@
+@dc:title "Accounts"
+@dc:description "Description of Accounts for my project."
+description <http://www.example.com/project/identity-management/accounts#> as accounts {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <http://www.example.com/method/base#> as base
+    uses <http://www.example.com/method/account#> as account
+    extends <http://www.example.com/project/identity-management/identities#> as identities
+    extends <http://www.example.com/project/access-models/entitlements#> as entitlements
+
+
+
+    instance Account1 : account:Account [
+        base:itemName "sl0043"
+        account:nativeIdentity "NETWORK\sl0043"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity1
+        account:holdsEntitlement entitlements:Entitlement1
+    ]
+
+    instance Account2 : account:Account [
+        base:itemName "bs0012"
+        account:nativeIdentity "NETWORK\bs0012"
+        account:isCorrelated false
+        account:holdsEntitlement entitlements:Entitlement3
+    ]
+
+    instance Account3 : account:Account [
+        base:itemName "Ledbetter, Sheldon"
+        account:nativeIdentity "sl0043@network.org"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity1
+        account:holdsEntitlement entitlements:Entitlement4, entitlements:Entitlement5
+    ]
+
+    instance Account4 : account:Account [
+        base:itemName "Swiger, Bryan"
+        account:nativeIdentity "bs0012@network.org"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity2
+    ]
+}

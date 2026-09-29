@@ -1,0 +1,41 @@
+vocabulary <http://www.example.com/method/identity#> as identity {
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.example.com/method/base#> as base
+
+    @dc:description "The class of identities"
+    concept Identity < base:Component [
+        restricts identityType to exactly 1 identityTypes
+    ]
+
+
+    @dc:description "The scalar property indicating the types of an identity"
+    scalar identityTypes [
+        oneOf "Machine", "Human", "Agent"
+    ]
+
+
+    @dc:description "The identity type property of an identity"
+    scalar property identityType [
+        domain Identity
+        range identityTypes
+        functional
+    ]
+
+
+    @dc:description "The class of machine identities"
+    concept MachineIdentity = Identity [
+        restricts identityType to "Machine"
+    ]
+
+
+    @dc:description "The class of human identities"
+    concept HumanIdentity = Identity [
+        restricts identityType to "Human"
+    ]
+
+
+    @dc:description "The class of agent identities"
+    concept AgentIdentity = Identity [
+        restricts identityType to "Agent"
+    ]
+}

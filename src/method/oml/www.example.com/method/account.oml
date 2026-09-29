@@ -1,0 +1,51 @@
+vocabulary <http://www.example.com/method/account#> as account {
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.w3.org/2001/XMLSchema#> as xsd
+    extends <http://www.example.com/method/base#> as base
+    extends <http://www.example.com/method/entitlement#> as entitlement
+    extends <http://www.example.com/method/identity#> as identity
+    extends <http://www.example.com/method/application-source#> as application-source
+
+    @dc:description "The class of accounts"
+    concept Account < base:Component [
+        restricts isCorrelated to exactly 1
+        restricts nativeIdentity to exactly 1
+        restricts application-source:isAccountOf to exactly 1
+    ]
+
+
+    @dc:description "The relation from Account to Identity"
+    relation correlatesTo [
+        from Account
+        to identity:Identity
+        reverse isCorrelatedTo
+        functional
+    ]
+
+
+    @dc:description "The relation from Account to Entitlement"
+    relation holdsEntitlement [
+        from Account
+        to entitlement:Entitlement
+        reverse heldBy
+    ]
+
+
+    @dc:description "Scalar property indicating whether an account is correlated to an identity"
+    scalar property isCorrelated [
+        domain Account
+        range xsd:boolean
+    ]
+
+    scalar property nativeIdentity [
+        domain Account
+        range xsd:string
+        functional
+    ]
+
+
+    @dc:description "The class of orphan accounts"
+    concept OrphanAccount = Account [
+        restricts isCorrelated to false
+    ]
+}

@@ -1,0 +1,22 @@
+@dc:title "Roles"
+@dc:description "Description of Roles for my project."
+description <http://www.example.com/project/access-models/roles#> as roles {
+    uses <http://purl.org/dc/elements/1.1/> as dc
+    uses <http://www.example.com/method/base#> as base
+    extends <http://www.example.com/project/access-models/entitlements#> as entitlements
+    extends <http://www.example.com/project/access-models/access-profiles#> as access-profiles
+    uses <http://www.example.com/method/role#> as role
+
+
+    instance Role1 : role:Role [
+        base:itemName "Systems Administrator"
+        base:itemDescription "Responsible for managing and maintaining access for all applications."
+        role:containsEntitlement entitlements:Entitlement1, entitlements:Entitlement5
+    ]
+
+    instance Role2 : role:Role [
+        base:itemName "HR Analyst"
+        base:itemDescription "Basic HR functions and responsibilities."
+        role:containsAccessProfile access-profiles:AccessProfile2
+    ]
+}

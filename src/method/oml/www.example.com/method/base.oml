@@ -1,0 +1,41 @@
+vocabulary <http://www.example.com/method/base#> as base {
+    extends <http://purl.org/dc/elements/1.1/> as dc
+    extends <http://www.w3.org/2001/XMLSchema#> as xsd
+
+    @dc:description "Reusable traits that concepts can share."
+    aspect Identified
+
+
+    @dc:description "Name of an Identified element."
+    scalar property itemName [
+        domain Identified
+        range xsd:string
+        functional
+    ]
+
+
+    @dc:description "Description of an Identified element."
+    scalar property itemDescription [
+        domain Identified
+        range xsd:string
+        functional
+    ]
+
+    scalar property id [
+        domain Identified
+        range xsd:string
+        functional
+    ]
+
+
+    @dc:description "An example concept — replace it with your own domain type."
+    concept Component < Identified
+
+
+    @dc:description "An example relation linking a Component to one it depends on."
+    relation dependsOn [
+        from Component
+        to Component
+        reverse dependedOnBy
+    ]
+}
