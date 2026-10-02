@@ -5,8 +5,6 @@ description <http://www.example.com/project/identity-management/identities#> as 
     uses <http://www.example.com/method/base#> as base
     uses <http://www.example.com/method/identity#> as identity
 
-
-
     instance Identity1 : identity:Identity [
         base:itemName "Sheldon Ledbetter"
         identity:identityType "Human"
@@ -14,6 +12,11 @@ description <http://www.example.com/project/identity-management/identities#> as 
 
     instance Identity2 : identity:Identity [
         base:itemName "Bryan Swiger"
+        identity:identityType "Human"
+    ]
+
+    instance Identity3 : identity:Identity [
+        base:itemName "Dominic Beswick"
         identity:identityType "Human"
     ]
 }

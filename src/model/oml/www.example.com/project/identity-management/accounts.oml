@@ -7,8 +7,6 @@ description <http://www.example.com/project/identity-management/accounts#> as ac
     extends <http://www.example.com/project/identity-management/identities#> as identities
     extends <http://www.example.com/project/access-models/entitlements#> as entitlements
 
-
-
     instance Account1 : account:Account [
         base:itemName "sl0043"
         account:nativeIdentity "NETWORK\sl0043"
@@ -37,5 +35,29 @@ description <http://www.example.com/project/identity-management/accounts#> as ac
         account:nativeIdentity "bs0012@network.org"
         account:isCorrelated true
         account:correlatesTo identities:Identity2
+    ]
+
+    instance Account5 : account:Account [
+        base:itemName "Dominic Beswick"
+        account:nativeIdentity "991a10df-77b0-42a7-9367-a0530d868cc2"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity3
+        account:holdsEntitlement entitlements:Entitlement6
+    ]
+
+    instance Account6 : account:Account [
+        base:itemName "Sheldon Ledbetter"
+        account:nativeIdentity "802c448f-b9e2-455d-b412-27206d4d3a7b"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity1
+        account:holdsEntitlement entitlements:Entitlement6, entitlements:Entitlement7
+    ]
+
+    instance Account7 : account:Account [
+        base:itemName "Bryan Swiger"
+        account:nativeIdentity "3b148911-832a-4b36-aaca-7fd033996963"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity2
+        account:holdsEntitlement entitlements:Entitlement7
     ]
 }

@@ -5,7 +5,6 @@ description <http://www.example.com/project/access-models/entitlements#> as enti
     uses <http://www.example.com/method/base#> as base
     uses <http://www.example.com/method/entitlement#> as entitlement
 
-
     instance Entitlement1 : entitlement:Entitlement [
         base:itemName "Domain Admin"
         base:itemDescription "Administrative privileges in an Active Directory domain."
@@ -29,5 +28,13 @@ description <http://www.example.com/project/access-models/entitlements#> as enti
     instance Entitlement5 : entitlement:Entitlement [
         base:itemName "Team_Admin"
         base:itemDescription "Administrative privileges."
+    ]
+
+    instance Entitlement6 : entitlement:Entitlement [
+        base:itemName "DocuSign Sender"
+    ]
+
+    instance Entitlement7 : entitlement:Entitlement [
+        base:itemName "DS Sender/Template Share"
     ]
 }

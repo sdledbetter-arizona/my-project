@@ -19,6 +19,22 @@ description <http://www.example.com/project/connections/application-sources#> as
         base:itemDescription "Dropbox is a cloud storage service that allows users to store and sync files across devices."
         application:hasEntitlement entitlements:Entitlement4, entitlements:Entitlement5
         application:hasAccount accounts:Account3, accounts:Account4
+    ]
 
+    instance ApplicationSource3 : application:ApplicationSource [
+        base:itemName "DocuSign"
+        base:itemDescription "A cloud-based software platform that allows people and businesses to sign, send, and manage legal documents and contracts electronically."
+        application:hasAccount accounts:Account5, accounts:Account6, accounts:Account7
+        application:hasEntitlement entitlements:Entitlement5, entitlements:Entitlement6, entitlements:Entitlement7
+    ]
+
+    instance ApplicationSource4 : application:ApplicationSource [
+        base:itemName "LogicGate"
+        base:itemDescription "Leading AI-powered GRC platform with 30+ applications for enterprise risk, third-party risk, cyber risk, and compliance management."
+    ]
+
+    instance ApplicationSource5 : application:ApplicationSource [
+        base:itemName "MD-Staff"
+        base:itemDescription "An AI-powered, cloud-based provider credentialing, privileging, and enrollment software designed for healthcare organizations and medical staff offices."
     ]
 }
