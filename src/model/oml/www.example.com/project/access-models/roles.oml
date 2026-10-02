@@ -7,7 +7,6 @@ description <http://www.example.com/project/access-models/roles#> as roles {
     extends <http://www.example.com/project/access-models/access-profiles#> as access-profiles
     uses <http://www.example.com/method/role#> as role
 
-
     instance Role1 : role:Role [
         base:itemName "Systems Administrator"
         base:itemDescription "Responsible for managing and maintaining access for all applications."
@@ -18,5 +17,9 @@ description <http://www.example.com/project/access-models/roles#> as roles {
         base:itemName "HR Analyst"
         base:itemDescription "Basic HR functions and responsibilities."
         role:containsAccessProfile access-profiles:AccessProfile2
+    ]
+
+    instance Role3 : role:Role [
+        base:itemName "Blank Role"
     ]
 }

@@ -33,3 +33,11 @@
   </tr>
 </table>
 
+## Analysis
+
+<table style="width: 100%; background-color: rgba(255, 194, 64, 0.12);">
+  <tr>
+    <td>1. <a href="./Analysis Dashboard.md">Identity Governance Analysis Dashboard</a></td>
+  </tr>
+</table>
+

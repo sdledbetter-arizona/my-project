@@ -7,7 +7,6 @@ description <http://www.example.com/project/access-models/access-profiles#> as a
     extends <http://www.example.com/project/connections/application-sources#> as applications
     uses <http://www.example.com/method/access-profile#> as access-profile
 
-
     instance AccessProfile1 : access-profile:AccessProfile [
         base:itemName "Citrix Access"
         base:itemDescription "Access to Citrix applications and resources."
@@ -22,4 +21,12 @@ description <http://www.example.com/project/access-models/access-profiles#> as a
         access-profile:bundles entitlements:Entitlement4
     ]
 
+    instance AccessProfile3 : access-profile:AccessProfile [
+        base:itemName "New Access Profile"
+        access-profile:belongsToApplicationSource applications:ApplicationSource4
+    ]
+
+    instance AccessProfile4 : access-profile:AccessProfile [
+        base:itemName "Another Access Profile"
+    ]
 }

@@ -60,4 +60,10 @@ description <http://www.example.com/project/identity-management/accounts#> as ac
         account:correlatesTo identities:Identity2
         account:holdsEntitlement entitlements:Entitlement7
     ]
+
+    instance Account8 : account:Account [
+        base:itemName "New Account"
+        account:nativeIdentity "Native Identity"
+        account:isCorrelated false
+    ]
 }
