@@ -25,7 +25,7 @@ description <http://www.example.com/project/connections/application-sources#> as
         base:itemName "DocuSign"
         base:itemDescription "A cloud-based software platform that allows people and businesses to sign, send, and manage legal documents and contracts electronically."
         application:hasAccount accounts:Account5, accounts:Account6, accounts:Account7
-        application:hasEntitlement entitlements:Entitlement5, entitlements:Entitlement6, entitlements:Entitlement7
+        application:hasEntitlement entitlements:Entitlement7, entitlements:Entitlement6
     ]
 
     instance ApplicationSource4 : application:ApplicationSource [
