@@ -25,7 +25,7 @@ description <http://www.example.com/project/access-models/access-profiles#> as a
         base:itemName "Sales Cloud Standard Access"
         base:itemDescription "Standard Salesforce sales access with reporting capabilities."
         access-profile:belongsToApplicationSource applications:ApplicationSource4
-        access-profile:bundles entitlements:Entitlement8, entitlements:Entitlement9
+        access-profile:bundles entitlements:Entitlement8, entitlements:Entitlement9, entitlements:Entitlement1
     ]
 
     instance AccessProfile4 : access-profile:AccessProfile [
