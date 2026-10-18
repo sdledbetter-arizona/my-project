@@ -52,7 +52,7 @@ description <http://www.example.com/project/connections/application-sources#> as
     instance ApplicationSource7 : application:ApplicationSource [
         base:itemName "Confluence"
         base:itemDescription "A team collaboration wiki with configured entitlements but no accounts connected."
-        application:hasEntitlement entitlements:Entitlement14, entitlements:Entitlement15, entitlements:Entitlement16
+        application:hasEntitlement entitlements:Entitlement14, entitlements:Entitlement15
     ]
 
     instance ApplicationSource8 : application:ApplicationSource [
