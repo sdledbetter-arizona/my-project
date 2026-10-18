@@ -37,6 +37,6 @@ description <http://www.example.com/project/identity-management/identities#> as 
 
     instance Identity7 : identity:Identity [
         base:itemName "Build Automation"
-        identity:identityType "Machine", "Human"
+        identity:identityType "Machine"
     ]
 }
