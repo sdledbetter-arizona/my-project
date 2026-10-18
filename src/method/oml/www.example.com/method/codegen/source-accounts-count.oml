@@ -1,0 +1,75 @@
+description <http://www.example.com/method/codegen/source-accounts-count#> as source-accounts-count {
+
+    uses <http://opencaesar.io/codegen#> as codegen
+
+    instance SourceAccountsCountSpec : codegen:Spec [
+        codegen:construct """
+            PREFIX oml:       <http://opencaesar.io/oml#>
+            PREFIX codegen: <http://opencaesar.io/codegen#>
+            PREFIX base: <http://www.example.com/method/base#>
+            PREFIX application: <http://www.example.com/method/application-source#>
+            PREFIX sources: <http://www.example.com/method/codegen/source-accounts-count#>
+
+            CONSTRUCT {
+                ?file a codegen:File ;
+                    codegen:path ?outputPath ;
+                    codegen:template sources:SourceAccountsCountTemplate ;
+                    codegen:root ?chart .
+
+                ?chart sources:source ?sourceCount .
+                ?chart sources:maxAccountCount ?maxAccountCount .
+
+                ?sourceCount sources:applicationName ?sourceName ;
+                    sources:accountCount ?accountCount .
+            }
+            WHERE {
+                BIND(IRI("urn:file:source-accounts-count") AS ?file)
+                BIND(CONCAT("${path}/source-accounts-count.md") AS ?outputPath)
+                BIND(IRI("urn:chart:source-accounts-count") AS ?chart)
+
+                {
+                    SELECT ?source ?sourceName (COUNT(DISTINCT ?account) AS ?accountCount) WHERE {
+                        ?source a application:ApplicationSource ;
+                            base:itemName ?sourceName .
+                        OPTIONAL { ?source application:hasAccount ?account . }
+                    }
+                    GROUP BY ?source ?sourceName
+                }
+                {
+                    SELECT (MAX(?count) AS ?maxAccountCount) WHERE {
+                        {
+                            SELECT ?count WHERE {
+                                {
+                                    SELECT ?source (COUNT(DISTINCT ?account) AS ?count) WHERE {
+                                        ?source a application:ApplicationSource .
+                                        OPTIONAL { ?source application:hasAccount ?account . }
+                                    }
+                                    GROUP BY ?source
+                                }
+                            }
+                        }
+                    }
+                }
+                BIND(IRI(CONCAT("urn:source-account-count:", ENCODE_FOR_URI(STR(?source)))) AS ?sourceCount)
+            }
+        """
+        codegen:parameter "path"
+    ]
+
+    instance SourceAccountsCountTemplate : codegen:Template [
+        codegen:body """
+            {%- set chart = object(file, "codegen:root") -%}
+            {%- set sources = objects(chart, "sources:source") -%}
+            {%- set maxAccountCount = object(chart, "sources:maxAccountCount") -%}
+            
+            # Accounts by Application Source
+
+            | Application Source | Count |
+            |---|:---:|
+            {% for source in sources -%}
+            | {{ object(source, "sources:applicationName") }} | {{ object(source, "sources:accountCount") }} &nbsp; <progress value="{{ object(source, "sources:accountCount") }}" max="{{ maxAccountCount }}"></progress> | {% if not source.last %}{{ "\n" }}{% endif %}
+            {%- endfor %}
+
+        """
+    ]
+}

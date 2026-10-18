@@ -1,0 +1,13 @@
+description <http://www.example.com/project/codegen/configs#> as configs {
+
+	uses <http://opencaesar.io/codegen#> as codegen
+
+    extends <http://www.example.com/method/codegen/source-accounts-count#> as source-accounts-count
+
+    
+    instance sm1 : codegen:Config [
+        codegen:spec source-accounts-count:SourceAccountsCountSpec
+        codegen:context "http://www.example.com/project/connections/application-sources#"
+        codegen:binding [codegen:key "path" codegen:value "build/docs"]
+    ]
+}
