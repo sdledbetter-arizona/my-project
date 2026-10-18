@@ -1,4 +1,6 @@
 # SailPoint Identity Governance Ontology
+[![Release](https://img.shields.io/github/v/release/sdledbetter-arizona/my-project)](https://github.com/sdledbetter-arizona/my-project/releases/latest)
+[![Live Site](https://img.shields.io/badge/Live-Site-brightgreen)](https://sdledbetter-arizona.github.io/my-project/)
 
 This repository contains an [OML](https://www.modelware.io/) ontology for a
 SailPoint Identity Security Cloud identity governance and administration
