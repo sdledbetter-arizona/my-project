@@ -19,4 +19,24 @@ description <http://www.example.com/project/identity-management/identities#> as 
         base:itemName "Dominic Beswick"
         identity:identityType "Human"
     ]
+
+    instance Identity4 : identity:Identity [
+        base:itemName "Maya Chen"
+        identity:identityType "Human"
+    ]
+
+    instance Identity5 : identity:Identity [
+        base:itemName "Jordan Patel"
+        identity:identityType "Human"
+    ]
+
+    instance Identity6 : identity:Identity [
+        base:itemName "Alex Rivera"
+        identity:identityType "Human"
+    ]
+
+    instance Identity7 : identity:Identity [
+        base:itemName "Build Automation"
+        identity:identityType "Machine"
+    ]
 }

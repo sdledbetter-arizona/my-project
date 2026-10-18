@@ -22,11 +22,42 @@ description <http://www.example.com/project/access-models/access-profiles#> as a
     ]
 
     instance AccessProfile3 : access-profile:AccessProfile [
-        base:itemName "New Access Profile"
+        base:itemName "Sales Cloud Standard Access"
+        base:itemDescription "Standard Salesforce sales access with reporting capabilities."
         access-profile:belongsToApplicationSource applications:ApplicationSource4
+        access-profile:bundles entitlements:Entitlement8, entitlements:Entitlement9
     ]
 
     instance AccessProfile4 : access-profile:AccessProfile [
-        base:itemName "Another Access Profile"
+        base:itemName "ServiceNow Service Desk Access"
+        base:itemDescription "IT service management and service request access."
+        access-profile:belongsToApplicationSource applications:ApplicationSource5
+        access-profile:bundles entitlements:Entitlement10, entitlements:Entitlement11
+    ]
+
+    instance AccessProfile5 : access-profile:AccessProfile [
+        base:itemName "GitHub Developer Access"
+        base:itemDescription "Organization membership for software development."
+        access-profile:belongsToApplicationSource applications:ApplicationSource6
+        access-profile:bundles entitlements:Entitlement12
+    ]
+
+    instance AccessProfile6 : access-profile:AccessProfile [
+        base:itemName "GitHub Repository Administration"
+        base:itemDescription "Administrative access for managing GitHub repositories."
+        access-profile:belongsToApplicationSource applications:ApplicationSource6
+        access-profile:bundles entitlements:Entitlement13
+    ]
+
+    instance AccessProfile7 : access-profile:AccessProfile [
+        base:itemName "Confluence Access - Unconfigured"
+        base:itemDescription "Placeholder access profile with no bundled entitlements yet."
+        access-profile:belongsToApplicationSource applications:ApplicationSource7
+    ]
+
+    instance AccessProfile8 : access-profile:AccessProfile [
+        base:itemName "Workday HR Access - Unconfigured"
+        base:itemDescription "Placeholder access profile with no bundled entitlements yet."
+        access-profile:belongsToApplicationSource applications:ApplicationSource8
     ]
 }

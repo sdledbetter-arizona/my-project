@@ -37,7 +37,7 @@ ORDER BY ?ApplicationName ?AccountName ?EntitlementName
 
 ## Accounts by Application — Chart
 
-Counts linked accounts for each source. Sources without linked accounts appear in the gap scan below.
+Counts linked accounts for every source, including sources with no accounts, which appear with a count of zero.
 
 ```chart
 ---
@@ -62,8 +62,8 @@ PREFIX application: <http://www.example.com/method/application-source#>
 
 SELECT ?ApplicationName (COUNT(DISTINCT ?Account) AS ?AccountCount) WHERE {
     ?Application a application:ApplicationSource ;
-        base:itemName ?ApplicationName ;
-        application:hasAccount ?Account .
+        base:itemName ?ApplicationName .
+    OPTIONAL { ?Application application:hasAccount ?Account . }
 }
 GROUP BY ?ApplicationName
 ORDER BY ?ApplicationName
@@ -112,12 +112,20 @@ The following computation intersects each identity's held entitlements with each
 role_entitlements = {
     "Systems Administrator": {"Entitlement1", "Entitlement5"},
     "HR Analyst": {"Entitlement4"},
+    "Sales Operations Analyst": {"Entitlement8", "Entitlement9"},
+    "IT Service Desk Analyst": {"Entitlement10", "Entitlement11"},
+    "Software Engineer": {"Entitlement12"},
+    "Repository Administrator": {"Entitlement13"},
 }
 
 identity_entitlements = {
-    "Sheldon Ledbetter": {"Entitlement1", "Entitlement4", "Entitlement5", "Entitlement6", "Entitlement7"},
-    "Bryan Swiger": {"Entitlement7"},
-    "Dominic Beswick": {"Entitlement6"},
+    "Sheldon Ledbetter": {"Entitlement1", "Entitlement4", "Entitlement5", "Entitlement6", "Entitlement7", "Entitlement8", "Entitlement9", "Entitlement10", "Entitlement11", "Entitlement12"},
+    "Bryan Swiger": {"Entitlement7", "Entitlement8", "Entitlement11", "Entitlement12", "Entitlement13"},
+    "Dominic Beswick": {"Entitlement6", "Entitlement8", "Entitlement9", "Entitlement10", "Entitlement11", "Entitlement12"},
+    "Maya Chen": {"Entitlement8", "Entitlement9", "Entitlement10", "Entitlement11"},
+    "Jordan Patel": {"Entitlement8"},
+    "Alex Rivera": {"Entitlement12"},
+    "Build Automation": {"Entitlement13"},
 }
 
 held_entitlements = set().union(*identity_entitlements.values())

@@ -37,4 +37,44 @@ description <http://www.example.com/project/access-models/entitlements#> as enti
     instance Entitlement7 : entitlement:Entitlement [
         base:itemName "DS Sender/Template Share"
     ]
+
+    instance Entitlement8 : entitlement:Entitlement [
+        base:itemName "Sales Cloud User"
+        base:itemDescription "Access to Salesforce Sales Cloud records and standard sales workflows."
+    ]
+
+    instance Entitlement9 : entitlement:Entitlement [
+        base:itemName "Salesforce Reports Exporter"
+        base:itemDescription "Permission to run and export Salesforce reports."
+    ]
+
+    instance Entitlement10 : entitlement:Entitlement [
+        base:itemName "ServiceNow ITIL"
+        base:itemDescription "Access to IT service management workflows and records."
+    ]
+
+    instance Entitlement11 : entitlement:Entitlement [
+        base:itemName "ServiceNow Requester"
+        base:itemDescription "Permission to submit and track service requests."
+    ]
+
+    instance Entitlement12 : entitlement:Entitlement [
+        base:itemName "GitHub Organization Member"
+        base:itemDescription "Membership in the GitHub organization with access to assigned repositories."
+    ]
+
+    instance Entitlement13 : entitlement:Entitlement [
+        base:itemName "GitHub Repository Admin"
+        base:itemDescription "Administrative access to configure and manage assigned repositories."
+    ]
+
+    instance Entitlement14 : entitlement:Entitlement [
+        base:itemName "Confluence User"
+        base:itemDescription "Standard access to Confluence spaces and pages."
+    ]
+
+    instance Entitlement15 : entitlement:Entitlement [
+        base:itemName "Confluence Space Administrator"
+        base:itemDescription "Administrative permissions for configuring Confluence spaces."
+    ]
 }

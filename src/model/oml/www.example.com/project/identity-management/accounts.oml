@@ -62,8 +62,152 @@ description <http://www.example.com/project/identity-management/accounts#> as ac
     ]
 
     instance Account8 : account:Account [
-        base:itemName "New Account"
-        account:nativeIdentity "Native Identity"
+        base:itemName "Maya Chen - Salesforce"
+        account:nativeIdentity "maya.chen@corp.example"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity4
+        account:holdsEntitlement entitlements:Entitlement8, entitlements:Entitlement9
+    ]
+
+    instance Account9 : account:Account [
+        base:itemName "Jordan Patel - Salesforce"
+        account:nativeIdentity "jordan.patel@corp.example"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity5
+        account:holdsEntitlement entitlements:Entitlement8
+    ]
+
+    instance Account10 : account:Account [
+        base:itemName "Maya Chen - ServiceNow"
+        account:nativeIdentity "mchen"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity4
+        account:holdsEntitlement entitlements:Entitlement10, entitlements:Entitlement11
+    ]
+
+    instance Account11 : account:Account [
+        base:itemName "Alex Rivera - GitHub"
+        account:nativeIdentity "arivera"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity6
+        account:holdsEntitlement entitlements:Entitlement12
+    ]
+
+    instance Account12 : account:Account [
+        base:itemName "Build Automation - GitHub"
+        account:nativeIdentity "build-automation"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity7
+        account:holdsEntitlement entitlements:Entitlement13
+    ]
+
+    instance Account13 : account:Account [
+        base:itemName "Sheldon Ledbetter - Salesforce"
+        account:nativeIdentity "sheldon.ledbetter@corp.example"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity1
+        account:holdsEntitlement entitlements:Entitlement8, entitlements:Entitlement9
+    ]
+
+    instance Account14 : account:Account [
+        base:itemName "Bryan Swiger - Salesforce"
+        account:nativeIdentity "bryan.swiger@corp.example"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity2
+        account:holdsEntitlement entitlements:Entitlement8
+    ]
+
+    instance Account15 : account:Account [
+        base:itemName "Dominic Beswick - Salesforce"
+        account:nativeIdentity "dominic.beswick.sf@corp.example"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity3
+        account:holdsEntitlement entitlements:Entitlement8, entitlements:Entitlement9
+    ]
+
+    instance Account16 : account:Account [
+        base:itemName "Sheldon Ledbetter - ServiceNow"
+        account:nativeIdentity "sledbetter"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity1
+        account:holdsEntitlement entitlements:Entitlement10, entitlements:Entitlement11
+    ]
+
+    instance Account17 : account:Account [
+        base:itemName "Bryan Swiger - ServiceNow"
+        account:nativeIdentity "bswiger"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity2
+        account:holdsEntitlement entitlements:Entitlement11
+    ]
+
+    instance Account18 : account:Account [
+        base:itemName "Dominic Beswick - ServiceNow"
+        account:nativeIdentity "dbeswick"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity3
+        account:holdsEntitlement entitlements:Entitlement10, entitlements:Entitlement11
+    ]
+
+    instance Account19 : account:Account [
+        base:itemName "Sheldon Ledbetter - GitHub"
+        account:nativeIdentity "sheldon-ledbetter"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity1
+        account:holdsEntitlement entitlements:Entitlement12
+    ]
+
+    instance Account20 : account:Account [
+        base:itemName "Bryan Swiger - GitHub"
+        account:nativeIdentity "bryan-swiger"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity2
+        account:holdsEntitlement entitlements:Entitlement12, entitlements:Entitlement13
+    ]
+
+    instance Account21 : account:Account [
+        base:itemName "Dominic Beswick - GitHub"
+        account:nativeIdentity "dominic-beswick"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity3
+        account:holdsEntitlement entitlements:Entitlement12
+    ]
+
+    instance Account22 : account:Account [
+        base:itemName "Uncorrelated Active Directory account"
+        base:itemDescription "Sample orphan account with no linked identity."
+        account:nativeIdentity "NETWORK\unknown-204"
         account:isCorrelated false
+        account:holdsEntitlement entitlements:Entitlement3
+    ]
+
+    instance Account23 : account:Account [
+        base:itemName "Uncorrelated Salesforce account"
+        base:itemDescription "Sample orphan account with no linked identity."
+        account:nativeIdentity "unknown.sf-023@corp.example"
+        account:isCorrelated false
+        account:holdsEntitlement entitlements:Entitlement8
+    ]
+
+    instance Account24 : account:Account [
+        base:itemName "Uncorrelated ServiceNow account"
+        base:itemDescription "Sample orphan account with no linked identity."
+        account:nativeIdentity "unknown-itsm-024"
+        account:isCorrelated false
+        account:holdsEntitlement entitlements:Entitlement10
+    ]
+
+    instance Account25 : account:Account [
+        base:itemName "Maya Chen - Workday HR"
+        account:nativeIdentity "maya.chen.workday"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity4
+    ]
+
+    instance Account26 : account:Account [
+        base:itemName "Jordan Patel - Workday HR"
+        account:nativeIdentity "jordan.patel.workday"
+        account:isCorrelated true
+        account:correlatesTo identities:Identity5
     ]
 }

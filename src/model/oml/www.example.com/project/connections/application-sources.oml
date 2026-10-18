@@ -11,7 +11,7 @@ description <http://www.example.com/project/connections/application-sources#> as
         base:itemName "Active Directory"
         base:itemDescription "Active Directory is a directory service developed by Microsoft for Windows domain networks."
         application:hasEntitlement entitlements:Entitlement1, entitlements:Entitlement2, entitlements:Entitlement3
-        application:hasAccount accounts:Account1, accounts:Account2
+        application:hasAccount accounts:Account1, accounts:Account2, accounts:Account22
     ]
 
     instance ApplicationSource2 : application:ApplicationSource [
@@ -29,12 +29,35 @@ description <http://www.example.com/project/connections/application-sources#> as
     ]
 
     instance ApplicationSource4 : application:ApplicationSource [
-        base:itemName "LogicGate"
-        base:itemDescription "Leading AI-powered GRC platform with 30+ applications for enterprise risk, third-party risk, cyber risk, and compliance management."
+        base:itemName "Salesforce"
+        base:itemDescription "A customer relationship management platform for managing sales, customer service, and business data."
+        application:hasAccount accounts:Account8, accounts:Account9, accounts:Account13, accounts:Account14, accounts:Account15, accounts:Account23
+        application:hasEntitlement entitlements:Entitlement8, entitlements:Entitlement9
     ]
 
     instance ApplicationSource5 : application:ApplicationSource [
-        base:itemName "MD-Staff"
-        base:itemDescription "An AI-powered, cloud-based provider credentialing, privileging, and enrollment software designed for healthcare organizations and medical staff offices."
+        base:itemName "ServiceNow"
+        base:itemDescription "A cloud platform for IT service management, service requests, and enterprise workflows."
+        application:hasAccount accounts:Account10, accounts:Account16, accounts:Account17, accounts:Account18, accounts:Account24
+        application:hasEntitlement entitlements:Entitlement10, entitlements:Entitlement11
+    ]
+
+    instance ApplicationSource6 : application:ApplicationSource [
+        base:itemName "GitHub"
+        base:itemDescription "A software development platform for hosting repositories and collaborating on source code."
+        application:hasAccount accounts:Account11, accounts:Account12, accounts:Account19, accounts:Account20, accounts:Account21
+        application:hasEntitlement entitlements:Entitlement12, entitlements:Entitlement13
+    ]
+
+    instance ApplicationSource7 : application:ApplicationSource [
+        base:itemName "Confluence"
+        base:itemDescription "A team collaboration wiki with configured entitlements but no accounts connected."
+        application:hasEntitlement entitlements:Entitlement14, entitlements:Entitlement15
+    ]
+
+    instance ApplicationSource8 : application:ApplicationSource [
+        base:itemName "Workday HR"
+        base:itemDescription "A human resources system with connected accounts but no entitlements configured."
+        application:hasAccount accounts:Account25, accounts:Account26
     ]
 }

@@ -20,6 +20,36 @@ description <http://www.example.com/project/access-models/roles#> as roles {
     ]
 
     instance Role3 : role:Role [
-        base:itemName "Blank Role"
+        base:itemName "Sales Operations Analyst"
+        base:itemDescription "Sales operations access for customer records and report exports."
+        role:containsAccessProfile access-profiles:AccessProfile3
+    ]
+
+    instance Role4 : role:Role [
+        base:itemName "IT Service Desk Analyst"
+        base:itemDescription "Access to triage service requests and manage IT service workflows."
+        role:containsAccessProfile access-profiles:AccessProfile4
+    ]
+
+    instance Role5 : role:Role [
+        base:itemName "Software Engineer"
+        base:itemDescription "GitHub organization access for software development."
+        role:containsAccessProfile access-profiles:AccessProfile5
+    ]
+
+    instance Role6 : role:Role [
+        base:itemName "Repository Administrator"
+        base:itemDescription "Elevated access for managing repository configuration and permissions."
+        role:containsAccessProfile access-profiles:AccessProfile6
+    ]
+
+    instance Role7 : role:Role [
+        base:itemName "Unconfigured Confluence Role"
+        base:itemDescription "Placeholder role with no entitlements or access profiles assigned yet."
+    ]
+
+    instance Role8 : role:Role [
+        base:itemName "Unconfigured HR Role"
+        base:itemDescription "Placeholder role with no entitlements or access profiles assigned yet."
     ]
 }
