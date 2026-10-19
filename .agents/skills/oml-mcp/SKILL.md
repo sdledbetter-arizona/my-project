@@ -1,81 +1,114 @@
 ---
 name: oml-mcp
-description: 'Use when working with OML ontologies, models, validation, reasoning, containment, or SPARQL and the OML MCP tools are available. Prefer this skill before text search or direct file reads/writes for OML questions.'
+description: "Use the OML MCP tools for this SailPoint Identity Governance ontology: identities, accounts, correlation, entitlements, roles, access profiles, application sources, SPARQL, updates, validation, and reasoning."
 ---
+
+# OML MCP for this workspace
+
+Use MCP as the primary interface for model lookup, querying, updates, validation, and reasoning. The repository models SailPoint Identity Security Cloud identity-governance concepts; do not substitute examples or assumptions from unrelated OML domains.
 
 ## Load tool schemas first
 
-If OML MCP tool schemas are not yet loaded, batch-load "all" of them in a single ToolSearch call before any other action:
+Before the first OML MCP call in a turn, use `tool_search_tool` to load the required OML tools. Batch the tools needed for the task in one search, for example:
 
+`oml_workspace oml_search oml_about oml_members oml_paths oml_sparql oml_shapes oml_update oml_validate oml_reason oml_ontologies`
+
+Use the appropriate returned `oml-*` tools. Do not call an OML tool whose schema is not loaded.
+
+## Workspace vocabulary map
+
+The `http://www.example.com/project/bundle` description bundle is the normal context for queries spanning project data. `oml_workspace` provides its current root IRI and the other roots.
+
+| Prefix | IRI stem | Meaning |
+|---|---|---|
+| `base` | `http://www.example.com/method/base#` | `Identified`, `itemName`, `itemDescription`, `id`, and shared `Component` |
+| `identity` | `http://www.example.com/method/identity#` | `Identity`, `identityType`, `HumanIdentity`, `MachineIdentity`, `AgentIdentity` |
+| `account` | `http://www.example.com/method/account#` | `Account`, `nativeIdentity`, `isCorrelated`, `correlatesTo`, `holdsEntitlement`, `OrphanAccount` |
+| `application_source` | `http://www.example.com/method/application-source#` | `ApplicationSource`, `hasAccount`, `hasEntitlement` |
+| `entitlement` | `http://www.example.com/method/entitlement#` | `Entitlement` |
+| `access_profile` | `http://www.example.com/method/access-profile#` | `AccessProfile`, `belongsToApplicationSource`, `bundles` |
+| `role` | `http://www.example.com/method/role#` | `Role`, `containsEntitlement`, `containsAccessProfile` |
+| `identities` | `http://www.example.com/project/identity-management/identities#` | Identity instances |
+| `accounts` | `http://www.example.com/project/identity-management/accounts#` | Account instances |
+| `application_sources` | `http://www.example.com/project/connections/application-sources#` | Application source instances |
+| `entitlements` | `http://www.example.com/project/access-models/entitlements#` | Entitlement instances |
+| `access_profiles` | `http://www.example.com/project/access-models/access-profiles#` | Access profile instances |
+| `roles` | `http://www.example.com/project/access-models/roles#` | Role instances |
+
+Use the exact predicate and class IRIs from the model/tools; this table is a navigation aid, not permission to invent axioms.
+
+## Model-specific interpretation
+
+- Human, Machine, and Agent are values of `identity:identityType`. Existing instances are declared as `identity:Identity` and carry values such as `"Human"`; do not assume the named subclasses are the asserted instance type.
+- `base:itemName` is the normal display name. Accounts also have an application-specific `account:nativeIdentity`; do not confuse it with the display name or the correlated identity.
+- Accounts belong to a source through `application_source:hasAccount` (inverse: `account`-side `isAccountOf`), correlate to identities through `account:correlatesTo`, and may hold entitlements through `account:holdsEntitlement`.
+- An account is orphaned when its correlation state says it is uncorrelated (`account:isCorrelated false`, or the `account:OrphanAccount` class), not merely because a query fails to find a source link. The correlation flag and identity link must agree.
+- Entitlement names and source names are `base:itemName` values. Entitlements are related to sources with `application_source:hasEntitlement`.
+- An access profile belongs to one application source and may bundle zero or more entitlements. An empty profile has no `access_profile:bundles` assertions. Bundled entitlements must belong to that same source.
+- Roles may contain entitlements and/or access profiles. The vocabulary does not define a role-to-identity assignment; entitlement overlap is not proof that an identity was assigned a role.
+- The project does not consistently use `rdfs:label` for names. Query `base:itemName` unless the source specifically defines another naming property.
+
+## Planning and retrieval
+
+Determine whether the task is retrieval, update, or verification. Batch independent MCP calls where practical. Trust a tool result and do not repeat it unless a later update could have changed that result.
+
+For retrieval, follow **search → about → (members or paths if needed) → SPARQL**:
+
+1. Search once with a short domain term using `oml_search`. If no results, try one different short term; if both fail, ask what member or concept the user means. Search returns member types as well as matches.
+2. Use `oml_about` on relevant IRIs in one call, with the project bundle as context for broad coverage. It often supplies enough asserted and inferred neighborhood information to answer without SPARQL.
+3. If needed, use `oml_paths` to find relation paths between known members, or `oml_members` to enumerate a vocabulary's members. Use `oml_ontologies(includeImports=true)` only for questions about import structure.
+4. Use `oml_sparql` for filtered, aggregated, or multi-hop data. Use a root from `oml_workspace` (normally the project description bundle) for full import closure coverage. Use predicates and types identified from the model; avoid guessing.
+
+Query patterns for this model:
+
+```sparql
+# Include application sources that have no accounts.
+PREFIX app: <http://www.example.com/method/application-source#>
+PREFIX base: <http://www.example.com/method/base#>
+SELECT ?source ?name (COUNT(DISTINCT ?account) AS ?accountCount)
+WHERE {
+  ?source a app:ApplicationSource .
+  OPTIONAL { ?source base:itemName ?name }
+  OPTIONAL { ?source app:hasAccount ?account }
+}
+GROUP BY ?source ?name
+ORDER BY ?name
 ```
-ToolSearch("select:oml_workspace,oml_ontologies,oml_search,oml_about,oml_members,oml_paths,oml_sparql,oml_shapes,oml_update,oml_validate,oml_reason")
+
+```sparql
+# Find accounts explicitly marked uncorrelated.
+PREFIX acct: <http://www.example.com/method/account#>
+PREFIX base: <http://www.example.com/method/base#>
+SELECT ?account ?name ?nativeIdentity
+WHERE {
+  ?account a acct:Account ; acct:isCorrelated false .
+  OPTIONAL { ?account base:itemName ?name }
+  OPTIONAL { ?account acct:nativeIdentity ?nativeIdentity }
+}
+ORDER BY ?name
 ```
 
-## Planning discipline
+To report who holds an entitlement, traverse `account:correlatesTo` from the account and `account:holdsEntitlement` to the entitlement; obtain both display names with `base:itemName`. Distinguish an account from its correlated identity in the answer.
 
-Determine if the user question is about retrieving information from ontologies, updating ontologies, or verifying ontologies. Follow the corresponding workflow below.
+Only if an expected SPARQL query returns empty, run one diagnostic probe against the exact predicate (`SELECT ?s ?p ?o WHERE { ?s <predicate-IRI> ?o } LIMIT 5`). An empty probe points to a predicate/coverage mismatch; a non-empty probe points to query logic. An empty result that itself answers the question needs no probe.
 
-**Trust results; don't repeat.** Tool results reflect the current state of the workspace. Once a tool has answered something, do not re-run it to "double check" — no repeated searches, `oml_about`, or queries to confirm a result you already have. Re-run a tool only after a change that could have altered its answer (e.g. an `oml_update`). When you have the answer, state it.
+## Updating ontology data
 
-**Batch independent calls.** When you need several searches, or `oml_about` on several members, issue them in a single message rather than one round-trip each. Each tool call has real latency, so fewer calls is faster.
+Use `oml_update`, not direct edits to `.oml` files, for routine model changes.
 
-## Retrieve context workflow
+1. Retrieve the relevant class, properties, current instances, and target description ontology. Target the existing project description that owns that kind of data rather than creating a new ontology.
+2. Call `oml_shapes` on each class of an instance to create or modify. Treat `sh:targetClass`, every `sh:property/sh:path`, `sh:class`, and `sh:minCount` as the update contract. Use exact path IRIs for assertions. Check linked instances against the expected class. If no applicable shape/path is returned, inspect the vocabulary and ask rather than inventing a predicate.
+3. Plan one atomic `oml_update` call for the complete change:
+   - Create the instance, assert its RDF type, and add all required shape facts in the same call.
+   - Add relationships only after confirming their exact paths and linked target types.
+   - For a correlated `Account`, include `nativeIdentity`, `isCorrelated true`, and `correlatesTo`; also link it to exactly one application source with `hasAccount`. Do not add entitlements unless requested.
+   - For an `AccessProfile`, assert its name and source; omit `bundles` when the user asks for an empty profile.
+   - For an `Identity`, use the `Identity` class and set `identityType` to the requested controlled string value.
+   - Routine single-instance additions can be applied directly. Use `preview: true` for removals, bulk changes, or unfamiliar update patterns when reviewing generated text first is valuable.
+4. Avoid duplicate instance IDs and preserve existing user changes. Remove dependent links before deleting a member. Do not call `addImport` on a description ontology; imports belong to the appropriate bundle.
+5. Address any lint problems reported by `oml_update`. Do not make speculative follow-up changes.
+6. Once the update is lint-free, run `oml_validate` with `only: true` and `oml_reason` with `only: true, explanation: false` together. If reasoning reports inconsistency, request `explanation: true` before deciding on a fix.
 
-The standard progression is: **search → about → (members or paths if needed) → sparql**.
+## Verification and response
 
-**1. Search first.**
-Use `oml_search` to fuzzy-search for members matching words from the user prompt. Favor short key words over phrases (phrases usually return nothing). Each result includes the member's `omlType`, so you can tell a class from a property from an instance without a follow-up call. Search once; if it returns nothing, try one alternate key word; if that also fails, ask the user to clarify. Do not search repeatedly for the same intent.
-
-**2. Learn about found members.**
-Use `oml_about` on the members found in step 1 to understand how they are defined and how they relate to other things. Pass all relevant IRIs in a single call. This reveals predicates, types, and neighbouring members without writing SPARQL — and often answers the question entirely without needing a SPARQL query at all. Use a root from `oml_workspace` as context for broad coverage.
-
-> **Warning (writes only):** `oml_about` output may show predicates (e.g. inverse relations) that are inferred, not explicitly asserted. When you later intend to *write*, do **not** use a predicate seen here as justification for an `addAssertion` — the shape (`oml_shapes`) is the only authoritative source of assertable predicates. For *reading*, the `oml_about` result is trustworthy as-is.
-
-**3. Dig deeper if needed — discover predicates before writing SPARQL.**
-Before you write any SPARQL query, make sure you know the exact type and predicate IRIs you need to use. Use the following tools to discover them.
-
-Tip: Do NOT use `oml_search` any more after using `oml_about`. Instead:
-
-- Use `oml_paths` to discover predicate chains connecting source and target IRIs. This is often the case when the question is about how two known things are related. Use a root from `oml_workspace` as context. Hint: If one of IRIs belongs to an instance, and the other belongs to a class or property IRI, use the instance IRI in the source position.
-- Use `oml_members(ontology, kind)` to enumerate all members of an ontology of a given kind.
-- Use `oml_ontologies(includeImports=true)` only when the import structure itself is the question.
-
-**4. Query precisely with SPARQL.**
-Use `oml_sparql` for filtered, aggregated, or multi-hop results once you know the exact type and/or predicate IRIs from steps 2–3. Use a **root ontology** from `oml_workspace` as context for full import closure coverage — only narrow if you have a specific reason.
-
-Hint: Only if a query you *expected* to return data comes back empty, run one diagnostic probe before changing query logic: `SELECT ?s ?p ?o WHERE { ?s <pred> ?o } LIMIT 5`. Empty probe = wrong predicate IRI. Non-empty probe = query logic is the problem. An empty result that is itself the answer needs no probe.
-
-## Update ontologies workflow
-
-1. Retrieve context first:
-   - Identify relevant classes, properties, and existing instances.
-   - Identify candidate target ontologies for each intended change.
-
-2. Use `oml_shapes` on the class IRI of every instance type you intend to create or modify. Read the result carefully — it is your specification for `oml_update`. Extract:
-   - `sh:targetClass` — confirms the class IRI to assert as the instance type.
-   - `sh:property / sh:path` — the **exact predicate IRI** to use in each `addAssertion` or `addAnnotation` operation. Do not guess or invent predicate IRIs; use only what the shape lists.
-   - `sh:class` — the class of any cross-referenced instance (the linked target must be of this class).
-
-   Before adding any operations, double check that its predicate IRI matches a `sh:path` from the shape. If a predicate IRI has no matching `sh:path`, do not assert it.
-
-3. Build **all** `oml_update` operations in a single call using the predicate IRIs from step 2:
-   - `oml_update` is atomic: all operations succeed or all fail — plan the full set before calling.
-   - Order: `createInstance` → `addAssertion`/`addAnnotation` for required facts → cross-links to other instances.
-   - Whenever you add a `create*` operation, also add `addAssertion` to asser the instance's type.
-   - Apply directly for routine changes built from a shape (single-instance creates, simple assertions) — `oml_update` is atomic and reports lint problems on apply, so a mistake is caught and fixable without a separate preview. Reserve `preview: true` (then a second call to apply) for removals, bulk edits, or unfamiliar patterns where seeing the generated text first is worth the extra round-trip.
-   - When removing data, remove dependent links before deleting members.
-   - When using `createOntology`, specify the `targetFolder` as the relative workspace path to an `oml` folder that should nest the new ontology.
-
-4. Avoid these pitfalls:
-   - Do not issue multiple sequential `oml_update` calls to fix up a previous one — plan from the shape and do it in one call.
-   - Do not create instances without asserting their type and all required (`sh:minCount >= 1`) facts in the same call.
-   - Do not edit ontology files directly. Always use `oml_update`.
-   - Never call `addImport` on a description ontology; only on a description bundle.
-
-5. If `oml_update` reports lint problems, call a new `oml_update` to address the reported problems.
-
-6. If lint free, check the changes. `oml_update` has just linted them, so pass `only: true` to skip repeating lint. Issue both calls in a single message:
-   - `oml_validate` with `only: true` — SHACL validation.
-   - `oml_reason` with `only: true` and `explanation: false` — logical consistency check.
-
-7. If `oml_reason` returns `status: "inconsistent"`, call it again with `only: true` and `explanation: true` to read the explanation (the `highlight` evidence names the conflicting axioms), then fix the cause with a new `oml_update`.
+Report the concrete change or answer, the validation/reasoning outcome when relevant, and any limitation in the modeled facts. A role-to-identity assignment cannot be claimed because this vocabulary has no such relation. For source ownership or identity correlation, rely on the asserted link or its logically entailed inverse and distinguish that evidence from a name match.
